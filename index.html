@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultório Dra. Gláucia Athayde | Odontopediatria na Tijuca - RJ</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mint: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            custom: '#4ade80'
+                        },
+                        pastel: {
+                            green: '#e8f5e9',
+                            mint: '#d1fae5',
+                            blue: '#e0f2fe',
+                            yellow: '#fef3c7',
+                            pink: '#fdf2f8',
+                            purple: '#f3e8ff',
+                            cream: '#fcfbfa'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .bubble-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .pulse-whatsapp {
+            animation: pulse-wa 2s infinite;
+        }
+        @keyframes pulse-wa {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+    </style>
+</head>
+<body class="bg-[#fafaf9] text-slate-700 font-sans antialiased selection:bg-teal-200 selection:text-teal-900">
+
+    <!-- Toast Notification Box (Custom Alert replacement) -->
+    <div id="toast" class="fixed top-5 right-5 z-50 transform translate-x-full transition-transform duration-300 bg-white border border-teal-100 shadow-2xl rounded-2xl p-4 flex items-center space-x-3 max-w-sm">
+        <div class="bg-teal-100 text-teal-600 p-2.5 rounded-xl flex items-center justify-center">
+            <i class="fa-solid fa-circle-check text-xl"></i>
+        </div>
+        <div>
+            <h4 class="font-bold text-slate-800 text-sm">Mensagem Enviada!</h4>
+            <p id="toast-msg" class="text-xs text-slate-600">Entraremos em contato em breve.</p>
+        </div>
+    </div>
+
+    <!-- Header / Navegação Fixa -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#inicio" class="flex items-center space-x-3 group">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-tooth text-2xl"></i>
+                </div>
+                <div>
+                    <span class="block font-extrabold text-slate-800 text-lg leading-tight tracking-tight">Dra. Gláucia Athayde</span>
+                    <span class="block text-xs font-semibold text-teal-600 tracking-wider uppercase">Odontopediatria Humanizada</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex items-center space-x-8 font-medium text-sm text-slate-600">
+                <a href="#inicio" class="hover:text-teal-600 transition-colors">Início</a>
+                <a href="#sobre" class="hover:text-teal-600 transition-colors">A Odontopediatria</a>
+                <a href="#servicos" class="hover:text-teal-600 transition-colors">Serviços</a>
+                <a href="#consultorio" class="hover:text-teal-600 transition-colors">O Consultório</a>
+                <a href="#faq" class="hover:text-teal-600 transition-colors">Dicas & FAQ</a>
+                <a href="#contato" class="hover:text-teal-600 transition-colors">Contato</a>
+            </nav>
+
+            <!-- CTA Header -->
+            <div class="hidden md:flex items-center space-x-4">
+                <a href="https://wa.me/5521995570575?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta%20infantil." target="_blank" class="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/20 flex items-center space-x-2 transition-all transform hover:-translate-y-0.5">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>Agendar no WhatsApp</span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden text-slate-700 focus:outline-none p-2 rounded-xl hover:bg-slate-100">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-100 px-6 py-4 space-y-3 shadow-xl">
+            <a href="#inicio" class="mobile-link block text-slate-700 font-medium py-2 hover:text-teal-600">Início</a>
+            <a href="#sobre" class="mobile-link block text-slate-700 font-medium py-2 hover:text-teal-600">A Odontopediatria</a>
+            <a href="#servicos" class="mobile-link block text-slate-700 font-medium py-2 hover:text-teal-600">Serviços</a>
+            <a href="#consultorio" class="mobile-link block text-slate-700 font-medium py-2 hover:text-teal-600">O Consultório</a>
+            <a href="#faq" class="mobile-link block text-slate-700 font-medium py-2 hover:text-teal-600">Dicas & FAQ</a>
+            <a href="#contato" class="mobile-link block text-slate-700 font-medium py-2 hover:text-teal-600">Contato</a>
+            <div class="pt-2">
+                <a href="https://wa.me/5521995570575?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta%20infantil." target="_blank" class="w-full bg-emerald-500 text-white font-semibold py-3 rounded-2xl flex items-center justify-center space-x-2 shadow-md">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    <span>Agendar no WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Seção Hero (Impacto & Afeto) -->
+    <section id="inicio" class="relative overflow-hidden bg-gradient-to-b from-teal-50/60 via-amber-50/20 to-transparent pt-12 pb-20 lg:pt-20 lg:pb-32">
+        <!-- Background Decorative Shapes -->
+        <div class="absolute top-10 left-10 w-72 h-72 bg-emerald-200/30 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-80 h-80 bg-amber-200/30 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Text Content -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 bg-teal-100/80 text-teal-800 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold tracking-wide shadow-sm">
+                        <i class="fa-solid fa-heart-pulse text-teal-600"></i>
+                        <span>Atendimento Humanizado & Especializado para Crianças</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                        Sorrisos Saudáveis e Experiências Positivas <span class="text-teal-600 underline decoration-teal-300 decoration-wavy decoration-2">Desde o Primeiro Aninho</span>
+                    </h1>
+
+                    <p class="text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Ambiente totalmente lúdico, acolhedor e sem trauma no <strong class="text-slate-800">Corporate Tijuca</strong>. Cuidado especializado focado na prevenção, no bem-estar dos pequenos e na tranquilidade da sua família.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="https://wa.me/5521995570575?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta%20infantil." target="_blank" class="w-full sm:w-auto bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-8 py-4 rounded-2xl shadow-xl shadow-emerald-500/25 flex items-center justify-center space-x-3 transition-all transform hover:-translate-y-1">
+                            <i class="fa-brands fa-whatsapp text-2xl"></i>
+                            <span>Agendar Consulta Infantil</span>
+                        </a>
+                        <a href="#consultorio" class="w-full sm:w-auto bg-white hover:bg-slate-50 text-slate-700 font-bold px-8 py-4 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-center space-x-2 transition-all">
+                            <i class="fa-solid fa-hospital text-teal-600"></i>
+                            <span>Conhecer o Consultório</span>
+                        </a>
+                    </div>
+
+                    <!-- Trust Indicators -->
+                    <div class="pt-6 grid grid-cols-3 gap-4 border-t border-slate-200/60 max-w-lg mx-auto lg:mx-0">
+                        <div class="text-center lg:text-left">
+                            <span class="block font-extrabold text-2xl text-slate-900">100%</span>
+                            <span class="text-xs text-slate-500">Lúdico e Sem Trauma</span>
+                        </div>
+                        <div class="text-center lg:text-left border-x border-slate-200/60 px-2">
+                            <span class="block font-extrabold text-2xl text-slate-900">Tijuca</span>
+                            <span class="text-xs text-slate-500">Corporate Tijuca</span>
+                        </div>
+                        <div class="text-center lg:text-left">
+                            <span class="block font-extrabold text-2xl text-slate-900">Especializada</span>
+                            <span class="text-xs text-slate-500">Em Odontopediatria</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Graphic / Illustration Card -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <!-- Main Card with Soft Pastel Gradient -->
+                        <div class="bg-gradient-to-br from-teal-100 via-emerald-50 to-amber-50 p-6 sm:p-8 rounded-3xl shadow-2xl border-4 border-white relative overflow-hidden bubble-float">
+                            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-teal-200/50 rounded-full blur-2xl"></div>
+                            
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="bg-white px-4 py-2 rounded-xl shadow-sm flex items-center space-x-2">
+                                    <span class="w-3 h-3 bg-emerald-500 rounded-full animate-ping"></span>
+                                    <span class="text-xs font-bold text-slate-700">Atendimento Especializado</span>
+                                </div>
+                                <span class="text-teal-600 text-2xl"><i class="fa-solid fa-face-smile-beam"></i></span>
+                            </div>
+
+                            <div class="bg-white/90 backdrop-blur rounded-2xl p-6 shadow-inner space-y-4">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-14 h-14 bg-teal-500 text-white rounded-2xl flex items-center justify-center shadow-md">
+                                        <i class="fa-solid fa-user-doctor text-2xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-extrabold text-slate-800 text-lg">Dra. Gláucia Athayde</h3>
+                                        <p class="text-xs text-slate-500">CRO-RJ • Odontopediatra</p>
+                                    </div>
+                                </div>
+                                <p class="text-sm text-slate-600 italic">
+                                    "Transformar a ida ao dentista em uma aventura divertida e segura constrói sorrisos confiantes para toda a vida."
+                                </p>
+                            </div>
+
+                            <div class="mt-6 grid grid-cols-2 gap-3">
+                                <div class="bg-white/80 p-3 rounded-xl text-center shadow-sm">
+                                    <i class="fa-solid fa-shield-heart text-teal-600 mb-1 text-lg"></i>
+                                    <h4 class="font-bold text-xs text-slate-800">Prevenção Cárie Zero</h4>
+                                </div>
+                                <div class="bg-white/80 p-3 rounded-xl text-center shadow-sm">
+                                    <i class="fa-solid fa-baby text-amber-500 mb-1 text-lg"></i>
+                                    <h4 class="font-bold text-xs text-slate-800">Bebês & Pré-natal</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Floating Badge -->
+                        <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border border-slate-100 hidden sm:flex items-center space-x-3">
+                            <div class="bg-amber-100 text-amber-600 p-3 rounded-xl">
+                                <i class="fa-solid fa-star text-xl"></i>
+                            </div>
+                            <div>
+                                <span class="block font-bold text-sm text-slate-800">Ambiente Lúdico</span>
+                                <span class="text-xs text-slate-500">Sem medo de dentista</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Sobre a Odontopediatria (Por Que Escolher) -->
+    <section id="sobre" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-teal-600 font-bold uppercase tracking-widest text-xs bg-teal-50 px-3 py-1.5 rounded-full">A Odontopediatria Humanizada</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Cuidado com Paciência, Afeto e Respeito ao Tempo da Criança</h2>
+                <p class="text-slate-600 text-base sm:text-lg">
+                    Sabemos que a primeira infância molda a relação com a saúde bucal para o resto da vida. No nosso consultório, cada detalhe foi pensado para acolher.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-pastel-cream p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                    <div class="w-14 h-14 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-teal-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-hand-holding-heart"></i>
+                    </div>
+                    <h3 class="font-extrabold text-slate-800 text-lg mb-2">Paciência & Acolhimento</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Respeitamos o ritmo de cada criança, criando confiança passo a passo sem pressões ou procedimentos invasivos desnecessários.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-pastel-cream p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                    </div>
+                    <h3 class="font-extrabold text-slate-800 text-lg mb-2">Ambiente Lúdico</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Espaço projetado com elementos divertidos, brincadeiras e explicações interativas que transformam o medo em curiosidade boa.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-pastel-cream p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                    <div class="w-14 h-14 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-sky-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-shirt"></i>
+                    </div>
+                    <h3 class="font-extrabold text-slate-800 text-lg mb-2">Sem Jalecos Assustadores</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Atendimento amigável e descontraído, sem o visual clínico tradicional que costuma assustar os pequenos pacientes.
+                    </p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-pastel-cream p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all group">
+                    <div class="w-14 h-14 bg-pink-100 text-pink-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <h3 class="font-extrabold text-slate-800 text-lg mb-2">Diálogo com os Pais</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">
+                        Orientação clara e transparente para a família sobre escovação, chupeta, mamadeira, alimentação e prevenção em casa.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Cuidados & Serviços (Grid de Cards Lúdicos) -->
+    <section id="servicos" class="py-20 bg-gradient-to-b from-slate-50 to-teal-50/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                <span class="text-teal-600 font-bold uppercase tracking-widest text-xs bg-teal-100 px-3 py-1.5 rounded-full">Especialidades & Cuidados</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Tratamentos Completos para Cada Fase do Crescimento</h2>
+                <p class="text-slate-600 text-base sm:text-lg">
+                    Do pré-natal odontológico aos cuidados na adolescência, com tecnologia moderna e muito carinho.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Service 1 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-16 h-16 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-teal-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-baby-carriage"></i>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 text-xl mb-3">Primeiros Cuidados & Bebês</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            Pré-natal odontológico para gestantes, orientações para recém-nascidos, erupção dos primeiros dentinhos e higienização correta da gengiva e boca do bebê.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/5521995570575?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20Primeiros%20Cuidados%20e%20Bebês." target="_blank" class="inline-flex items-center space-x-2 text-teal-600 font-bold text-sm group-hover:text-teal-700">
+                        <span>Saiba mais no WhatsApp</span>
+                        <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-shield-virus"></i>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 text-xl mb-3">Prevenção & Cárie Zero</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            Aplicação de flúor profissional, selantes de proteção, escovação supervisionada divertida e plano individualizado para garantir o programa cárie zero.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/5521995570575?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20Prevenção%20e%20Cárie%20Zero." target="_blank" class="inline-flex items-center space-x-2 text-emerald-600 font-bold text-sm group-hover:text-emerald-700">
+                        <span>Saiba mais no WhatsApp</span>
+                        <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 text-xl mb-3">Tratamentos Curativos Infantis</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            Restaurações estéticas indolores, tratamento de cáries e cuidados com traumas dentários (quedas e batidas comuns na infância) realizados com total suavidade.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/5521995570575?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20Tratamentos%20Curativos." target="_blank" class="inline-flex items-center space-x-2 text-amber-600 font-bold text-sm group-hover:text-amber-700">
+                        <span>Saiba mais no WhatsApp</span>
+                        <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-16 h-16 bg-sky-50 text-sky-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-sky-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 text-xl mb-3">Crescimento & Oclusão</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            Acompanhamento ortopédico funcional dos maxilares, avaliação da mordida, respiração bucal e correção precoce de hábitos (chupeta e dedo).
+                        </p>
+                    </div>
+                    <a href="https://wa.me/5521995570575?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20Crescimento%20e%20Oclusão." target="_blank" class="inline-flex items-center space-x-2 text-sky-600 font-bold text-sm group-hover:text-sky-700">
+                        <span>Saiba mais no WhatsApp</span>
+                        <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-16 h-16 bg-pink-50 text-pink-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-pink-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-face-laugh-wink"></i>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 text-xl mb-3">Condicionamento Infantil</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            Técnicas psicológicas e lúdicas de adaptação (Dizer-Mostrar-Fazer) especial para crianças ansiosas, agitadas ou com experiências odontológicas negativas anteriores.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/5521995570575?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20Condicionamento%20Infantil." target="_blank" class="inline-flex items-center space-x-2 text-pink-600 font-bold text-sm group-hover:text-pink-700">
+                        <span>Saiba mais no WhatsApp</span>
+                        <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-slate-100 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-16 h-16 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-scissors"></i>
+                        </div>
+                        <h3 class="font-extrabold text-slate-900 text-xl mb-3">Freno Lingual & Lábio</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                            Avaliação e teste da linguzinha em recém-nascidos e bebês, prevenindo dificuldades na amamentação, na fala e no desenvolvimento mastigatório.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/5521995570575?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20Freno%20Lingual." target="_blank" class="inline-flex items-center space-x-2 text-purple-600 font-bold text-sm group-hover:text-purple-700">
+                        <span>Saiba mais no WhatsApp</span>
+                        <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção O Consultório (Corporate Tijuca) -->
+    <section id="consultorio" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-6 space-y-6">
+                    <span class="text-teal-600 font-bold uppercase tracking-widest text-xs bg-teal-50 px-3 py-1.5 rounded-full">Estrutura Moderna no Rio</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Um Espaço Feito Sob Medida para o Conforto da Família</h2>
+                    <p class="text-slate-600 text-base leading-relaxed">
+                        Localizado no <strong class="text-slate-800">Corporate Tijuca</strong>, nosso consultório oferece um ambiente climatizado, seguro, moderno e com fácil acesso. Tudo foi planejado para que pais e filhos sintam-se acolhidos desde a recepção até o atendimento.
+                    </p>
+
+                    <div class="space-y-4 pt-2">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-600 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800">Localização Privilegiada</h3>
+                                <p class="text-sm text-slate-600">R. Eng. Enaldo Cravo Peixoto, 105, Sala 701 - Tijuca, Rio de Janeiro - RJ.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-car"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800">Estacionamento & Comodidade</h3>
+                                <p class="text-sm text-slate-600">Prédio comercial com segurança, elevadores e facilidade de acesso na Tijuca.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fa-solid fa-child-reaching"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800">Espaço Kids Dedicado</h3>
+                                <p class="text-sm text-slate-600">Brinquedos educativos e cantinho especial para a espera ser leve e divertida.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gallery / Visual representation -->
+                <div class="lg:col-span-6 grid grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <div class="bg-gradient-to-br from-teal-400 to-emerald-500 rounded-3xl p-8 text-white shadow-xl flex flex-col justify-between h-64">
+                            <i class="fa-solid fa-hospital-user text-4xl opacity-80"></i>
+                            <div>
+                                <span class="block text-xs font-bold uppercase tracking-wider text-teal-100">Corporate Tijuca</span>
+                                <h3 class="text-xl font-extrabold">Sala 701</h3>
+                            </div>
+                        </div>
+                        <div class="bg-pastel-yellow rounded-3xl p-6 shadow-md border border-amber-100 flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-amber-500 text-white rounded-2xl flex items-center justify-center text-xl flex-shrink-0">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Horários Flexíveis</h4>
+                                <p class="text-xs text-slate-600">Sextas a partir das 09:00 e sob agendamento.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 pt-6">
+                        <div class="bg-pastel-blue rounded-3xl p-6 shadow-md border border-sky-100 flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-sky-500 text-white rounded-2xl flex items-center justify-center text-xl flex-shrink-0">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-sm">Biossegurança Rigorosa</h4>
+                                <p class="text-xs text-slate-600">Padrões máximos de esterilização.</p>
+                            </div>
+                        </div>
+                        <div class="bg-gradient-to-tr from-emerald-600 to-teal-500 rounded-3xl p-8 text-white shadow-xl flex flex-col justify-between h-64">
+                            <i class="fa-solid fa-face-smile text-4xl opacity-80"></i>
+                            <div>
+                                <span class="block text-xs font-bold uppercase tracking-wider text-emerald-100">Atendimento 5 Estrelas</span>
+                                <h3 class="text-xl font-extrabold">Famílias Felizes</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Dicas para Pais / FAQ Rápido (Acordeão Interativo) -->
+    <section id="faq" class="py-20 bg-slate-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 space-y-4">
+                <span class="text-teal-600 font-bold uppercase tracking-widest text-xs bg-teal-100 px-3 py-1.5 rounded-full">Dúvidas Frequentes</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Orientações Importantes para os Pais</h2>
+                <p class="text-slate-600 text-base">
+                    Tudo o que você precisa saber para preparar seu filho e cuidar da saúde bucal desde cedo.
+                </p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden transition-all">
+                    <button class="faq-toggle w-full px-6 py-5 text-left font-bold text-slate-800 text-base sm:text-lg flex items-center justify-between focus:outline-none hover:bg-slate-50/50">
+                        <span>Quando levar o bebê ao odontopediatra pela primeira vez?</span>
+                        <i class="fa-solid fa-chevron-down text-teal-600 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">
+                        Recomendamos a primeira consulta ainda durante a gestação (pré-natal odontológico) ou logo nos primeiros meses de vida do bebê (antes mesmo do primeiro dentinho nascer ou quando o primeiro dente irromper). Isso ajuda a orientar os pais sobre amamentação, higiene correta e prevenção precoce.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden transition-all">
+                    <button class="faq-toggle w-full px-6 py-5 text-left font-bold text-slate-800 text-base sm:text-lg flex items-center justify-between focus:outline-none hover:bg-slate-50/50">
+                        <span>Como preparar a criança para a consulta sem medo?</span>
+                        <i class="fa-solid fa-chevron-down text-teal-600 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">
+                        Fale sobre a consulta de forma positiva e natural, comparando a visita a um passeio divertido ou encontro com uma tia legal. Evite usar palavras como "dor", "injeção", "agulha" ou "medo". Diga que a Dra. Gláucia vai apenas contar e limpar os dentinhos com escovas mágicas!
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden transition-all">
+                    <button class="faq-toggle w-full px-6 py-5 text-left font-bold text-slate-800 text-base sm:text-lg flex items-center justify-between focus:outline-none hover:bg-slate-50/50">
+                        <span>Com que frequência devem ser feitas as consultas de prevenção?</span>
+                        <i class="fa-solid fa-chevron-down text-teal-600 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">
+                        O intervalo ideal é definido de forma personalizada pela Dra. Gláucia Athayde após avaliar o risco de cárie e o desenvolvimento de cada criança. Em geral, recomenda-se retorno a cada 3 a 6 meses para acompanhamento preventivo e aplicação de flúor.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden transition-all">
+                    <button class="faq-toggle w-full px-6 py-5 text-left font-bold text-slate-800 text-base sm:text-lg flex items-center justify-between focus:outline-none hover:bg-slate-50/50">
+                        <span>O uso de chupeta e mamadeira prejudica os dentes?</span>
+                        <i class="fa-solid fa-chevron-down text-teal-600 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content hidden px-6 pb-5 text-slate-600 text-sm leading-relaxed border-t border-slate-100 pt-4">
+                        Sim, o uso prolongado ou frequente pode alterar o formato da arcada dentária, a mordida e a respiração da criança. Durante a consulta, orientamos sobre o momento e a forma mais leve de realizar a remoção gradual desses hábitos.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Localização & Contato -->
+    <section id="contato" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <!-- Info & Map Details -->
+                <div class="lg:col-span-6 space-y-8">
+                    <div>
+                        <span class="text-teal-600 font-bold uppercase tracking-widest text-xs bg-teal-50 px-3 py-1.5 rounded-full">Fale Conosco</span>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-4">Agende a Consulta do Seu Filho na Tijuca</h2>
+                        <p class="text-slate-600 text-base mt-2">
+                            Estamos prontos para receber sua família com todo o carinho e profissionalismo.
+                        </p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-teal-100 text-teal-600 rounded-2xl flex items-center justify-center flex-shrink-0 text-xl">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-base">Endereço</h3>
+                                <p class="text-slate-600 text-sm">Edifício Corporate Tijuca<br>R. Eng. Enaldo Cravo Peixoto, 105, Sala 701<br>Tijuca, Rio de Janeiro - RJ, 20540-106</p>
+                                <a href="https://maps.google.com/?cid=6191347319585815748" target="_blank" class="inline-block mt-2 text-teal-600 font-bold text-xs hover:underline">
+                                    <i class="fa-solid fa-map-location-dot mr-1"></i> Ver no Google Maps
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center flex-shrink-0 text-xl">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-base">WhatsApp Direto</h3>
+                                <p class="text-slate-600 text-sm">(21) 99557-0575</p>
+                                <a href="https://wa.me/5521995570575?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." target="_blank" class="inline-block mt-2 text-emerald-600 font-bold text-xs hover:underline">
+                                    Iniciar Conversa Imediata →
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center flex-shrink-0 text-xl">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-base">Horários de Atendimento</h3>
+                                <p class="text-slate-600 text-sm">Sextas-feiras a partir das 09:00<br>Dias de semana sob agendamento prévio.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Form Card -->
+                <div class="lg:col-span-6 bg-slate-50 p-8 sm:p-10 rounded-3xl border border-slate-200/80 shadow-lg">
+                    <h3 class="text-2xl font-extrabold text-slate-900 mb-2">Envie uma Mensagem</h3>
+                    <p class="text-slate-600 text-sm mb-6">Preencha os campos abaixo e entraremos em contato rapidamente.</p>
+
+                    <form id="contact-form" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Nome do Responsável</label>
+                            <input type="text" id="resp-name" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Ex: Maria Silva">
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Nome da Criança</label>
+                                <input type="text" id="child-name" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Ex: Joãozinho">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Idade da Criança</label>
+                                <input type="text" id="child-age" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Ex: 4 anos">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Telefone / WhatsApp</label>
+                            <input type="tel" id="phone" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="(21) 99999-9999">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Mensagem ou Motivo da Consulta</label>
+                            <textarea id="message" rows="3" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Gostaria de agendar a primeira consulta preventiva..."></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-teal-600/20 transition-all flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>Enviar Mensagem</span>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé & Botão Flutuante -->
+    <footer class="bg-slate-900 text-slate-400 py-16 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-xl bg-teal-500 flex items-center justify-center text-white">
+                            <i class="fa-solid fa-tooth text-xl"></i>
+                        </div>
+                        <span class="font-extrabold text-white text-lg">Dra. Gláucia Athayde</span>
+                    </div>
+                    <p class="text-sm leading-relaxed">
+                        Odontopediatria humanizada, preventiva e lúdica no Corporate Tijuca, Rio de Janeiro - RJ. Transformando sorrisos infantis com afeto.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm uppercase tracking-wider mb-4">Links Rápidos</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#inicio" class="hover:text-teal-400 transition-colors">Início</a></li>
+                        <li><a href="#sobre" class="hover:text-teal-400 transition-colors">A Odontopediatria</a></li>
+                        <li><a href="#servicos" class="hover:text-teal-400 transition-colors">Serviços</a></li>
+                        <li><a href="#consultorio" class="hover:text-teal-400 transition-colors">O Consultório</a></li>
+                        <li><a href="#faq" class="hover:text-teal-400 transition-colors">Dicas & FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm uppercase tracking-wider mb-4">Especialidades</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><span class="hover:text-teal-400">Primeiros Cuidados & Bebês</span></li>
+                        <li><span class="hover:text-teal-400">Prevenção Cárie Zero</span></li>
+                        <li><span class="hover:text-teal-400">Condicionamento Infantil</span></li>
+                        <li><span class="hover:text-teal-400">Freno Lingual & Lábio</span></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-white text-sm uppercase tracking-wider mb-4">Redes Sociais</h4>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-10 h-10 bg-slate-800 hover:bg-teal-600 text-white rounded-xl flex items-center justify-center transition-colors">
+                            <i class="fa-brands fa-instagram text-lg"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-slate-800 hover:bg-emerald-600 text-white rounded-xl flex items-center justify-center transition-colors">
+                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-slate-800 hover:bg-sky-600 text-white rounded-xl flex items-center justify-center transition-colors">
+                            <i class="fa-brands fa-facebook-f text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="border-t border-slate-800 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500">
+                <p>&copy; 2026 Consultório Dra. Gláucia Athayde - Odontopediatria. Todos os direitos reservados.</p>
+                <p class="mt-2 sm:mt-0">Corporate Tijuca • R. Eng. Enaldo Cravo Peixoto, 105, Sala 701 - Tijuca, RJ</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Botão Flutuante Permanente do WhatsApp -->
+    <a href="https://wa.me/5521995570575?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta%20infantil." target="_blank" aria-label="WhatsApp" class="fixed bottom-6 right-6 z-50 bg-emerald-500 hover:bg-emerald-600 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center text-3xl pulse-whatsapp transition-transform hover:scale-110">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- JavaScript Interativo -->
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // FAQ Accordion Toggle
+        const faqToggles = document.querySelectorAll('.faq-toggle');
+
+        faqToggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const content = toggle.nextElementSibling;
+                const icon = toggle.querySelector('i');
+
+                // Close other toggles if desired, or let multiple open
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+
+        // Contact Form Submission Simulation (No alert())
+        const contactForm = document.getElementById('contact-form');
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toast-msg');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const respName = document.getElementById('resp-name').value;
+            const childName = document.getElementById('child-name').value;
+
+            toastMsg.textContent = `Obrigado, ${respName}! Mensagem sobre ${childName} recebida. Retornaremos em breve.`;
+            toast.classList.remove('translate-x-full');
+
+            contactForm.reset();
+
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
